@@ -1,12 +1,36 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Step1 Base Stack",
+  "Description": "Step1 Create Security Group",
 
   "Parameters": {
     "VpcId": {
-      "Type": "String"
+      "Type": "String",
+      "Description": "VPC where resources will be created"
     }
   },
 
-  "Resources": {}
+  "Resources": {
+
+    "WebSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+
+      "Properties": {
+        "GroupDescription": "Allow HTTP access",
+
+        "VpcId": {
+          "Ref": "VpcId"
+        },
+
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 80,
+            "ToPort": 80,
+            "CidrIp": "0.0.0.0/0"
+          }
+        ]
+      }
+    }
+
+  }
 }
